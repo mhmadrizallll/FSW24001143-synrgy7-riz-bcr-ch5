@@ -6,8 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
-const PUBLIC_DIR = path_1.default.join(__dirname, "../public");
-const UPLOADS_DIR = path_1.default.join(PUBLIC_DIR, "uploads");
+// const PUBLIC_DIR = path.join(__dirname, "../public");
+// const UPLOADS_DIR = path.join(PUBLIC_DIR, "uploads");
+const UPLOADS_DIR = path_1.default.join(process.cwd(), "public/uploads");
 // Pastikan direktori uploads ada
 if (!fs_1.default.existsSync(UPLOADS_DIR)) {
     fs_1.default.mkdirSync(UPLOADS_DIR, { recursive: true });

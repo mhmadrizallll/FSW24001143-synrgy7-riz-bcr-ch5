@@ -13,8 +13,8 @@ exports.uploadImageCars = exports.deleteCars = exports.updateCars = exports.addC
 const cars_model_1 = require("../models/cars.model");
 const uploadImageCars = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.file)
-        return res.status(400).send("No file uploaded");
-    const url = `/uploads/${req.file.filename}`;
+        return res.status(400).json({ message: "No file uploaded" });
+    const url = `/public/uploads/${req.file.filename}`;
     res.status(200).json({ message: "uploaded", url });
 });
 exports.uploadImageCars = uploadImageCars;
@@ -33,13 +33,16 @@ const getCarsById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.getCarsById = getCarsById;
 const addCars = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { merk, model, year, status, image } = req.body;
+        const { merk, model, year, status } = req.body;
+        const imageUrl = req.file
+            ? `/public/uploads/${req.file.filename}`
+            : null;
         const cars = yield cars_model_1.CarsModel.query().insert({
             merk,
             model,
             year,
             status,
-            image,
+            image: imageUrl,
         });
         res.status(200).send(cars);
     }

@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import { CarsModel } from "../models/cars.model";
-
 const uploadImageCars = async (req: Request, res: Response) => {
-  if (!req.file) return res.status(400).send("No file uploaded");
+  if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
-  const url = `/uploads/${req.file.filename}`;
+  const url = `/public/uploads/${req.file.filename}`;
   res.status(200).json({ message: "uploaded", url });
 };
 
@@ -22,13 +21,16 @@ const getCarsById = async (req: Request, res: Response) => {
 
 const addCars = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { merk, model, year, status, image } = req.body;
+    const { merk, model, year, status } = req.body;
+    const imageUrl: any = req.file
+      ? `/public/uploads/${req.file.filename}`
+      : null;
     const cars = await CarsModel.query().insert({
       merk,
       model,
       year,
       status,
-      image,
+      image: imageUrl,
     });
     res.status(200).send(cars);
   } catch (err) {

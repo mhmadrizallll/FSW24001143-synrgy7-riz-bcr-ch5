@@ -9,7 +9,7 @@ const uploadHandlers_1 = __importDefault(require("../middlewares/uploadHandlers"
 const router = express_1.default.Router();
 router.get("/", carsService_1.getCars);
 router.get("/:id", carsService_1.getCarsById);
-router.post("/", carsService_1.addCars);
+router.post("/", uploadHandlers_1.default.single("image"), carsService_1.addCars);
 router.put("/:id", carsService_1.updateCars);
 router.delete("/:id", carsService_1.deleteCars);
 router.post("/uploads", uploadHandlers_1.default.single("image"), carsService_1.uploadImageCars);
